@@ -1,0 +1,23 @@
+name: Deploy to my-host.hk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Execute script on remote server
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            docker pull your-dockerhub-username/your-image-name:latest
+            docker run --rm your-dockerhub-username/your-image-name:latest
