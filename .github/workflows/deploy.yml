@@ -19,5 +19,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull dimin75/ci-cd-test-ddk:latest
-            docker run --rm dimin75/ci-cd-test-ddk:latest
+            docker pull dimin75/ci-cd-test-ddk:ubuntu-22.04
+            docker run --rm dimin75/ci-cd-test-ddk:ubuntu-22.04
