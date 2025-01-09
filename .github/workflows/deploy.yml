@@ -17,7 +17,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull your-dockerhub-username/your-image-name:latest
-            docker run --rm your-dockerhub-username/your-image-name:latest
+            docker pull dimin75/ci-cd-test-ddk:latest
+            docker run --rm dimin75/ci-cd-test-ddk:latest
