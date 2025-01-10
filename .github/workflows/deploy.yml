@@ -1,4 +1,4 @@
-name: Deploy to my-host.hk
+name: Deploy to Remote Server my-host.hk
 
 on:
   push:
@@ -8,22 +8,29 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-22.04
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Execute script on remote server
+      uses: appleboy/ssh-action@v0.1.2
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |
+          # Создание директории на удаленном сервере, если ее нет
+          mkdir -p /opt/testproj
 
-      - name: Execute script on remote server
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
-            docker pull dimin75/ci-cd-test-ddk:ubuntu-22.04
-            docker run --rm dimin75/ci-cd-test-ddk:ubuntu-22.04
+          # Переход в эту директорию
+          cd /opt/testproj
+
+          # Клонирование репозитория на удаленный сервер
+          git clone https://github.com/${{ github.repository }} .
+
+          # Создание Docker образа из Dockerfile в репозитории
+          docker build -t ci-cd-test-ddk:ubuntu-22.04 .
+
+          # Запуск контейнера из только что созданного образа
+          docker run --rm ci-cd-test-ddk:ubuntu-22.04
