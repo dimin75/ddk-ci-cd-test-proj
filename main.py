@@ -2,4 +2,6 @@ print("Hello, world. This is an example of CI/CD-automation for GitHub project. 
 print("More strings to test is coming... 1")
 print("More strings to test is doming... 2")
 print("More strings to test is doming... 3")
+print("More strings to test is doming... 4")
+print("More strings to test is doming... 5")
 print("Done!")
