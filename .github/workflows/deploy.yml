@@ -30,7 +30,9 @@ jobs:
           rm -rf ./*
 
           # Клонирование репозитория на удаленный сервер
-          git clone https://github.com/${{ github.repository }} .
+          git clone https://github.com/${{ github.repository }}
+
+          cd ${{ github.repository }}
 
           # Создание Docker образа из Dockerfile в репозитории
           docker build --no-cache -t ci-cd-test-ddk:ubuntu-22.04 .
