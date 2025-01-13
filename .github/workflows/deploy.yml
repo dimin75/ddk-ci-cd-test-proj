@@ -30,7 +30,7 @@ jobs:
           git clone https://github.com/${{ github.repository }} .
 
           # Создание Docker образа из Dockerfile в репозитории
-          docker build -t ci-cd-test-ddk:ubuntu-22.04 .
+          docker build --no-cache -t ci-cd-test-ddk:ubuntu-22.04 .
 
           # Запуск контейнера из только что созданного образа
           docker run --rm ci-cd-test-ddk:ubuntu-22.04
